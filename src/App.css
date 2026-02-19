@@ -20,6 +20,11 @@
 	backdrop-filter: blur(6px);
 }
 
+body.hero-overlay-active .siteMenuWrap {
+	opacity: 0;
+	pointer-events: none;
+}
+
 .siteBrand {
 	font-family: 'Cormorant Garamond', serif;
 	font-weight: 700;

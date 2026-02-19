@@ -72,11 +72,13 @@ export default function Home() {
 
 		const previousBodyOverflow = document.body.style.overflow;
 		const previousHtmlOverflow = document.documentElement.style.overflow;
+		document.body.classList.add('hero-overlay-active');
 		window.scrollTo(0, 0);
 		document.body.style.overflow = 'hidden';
 		document.documentElement.style.overflow = 'hidden';
 
 		return () => {
+			document.body.classList.remove('hero-overlay-active');
 			document.body.style.overflow = previousBodyOverflow;
 			document.documentElement.style.overflow = previousHtmlOverflow;
 		};
@@ -187,6 +189,15 @@ function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () 
 			await sleep(940);
 			if (!active) return;
 
+			await controls.start({
+				scale: 1,
+				x: target.x * 0.9,
+				y: target.y * 0.9,
+				opacity: 1,
+				transition: { duration: 0.95, ease: [0.22, 1, 0.36, 1] }
+			});
+			if (!active) return;
+
 			onMoveStart();
 
 			await controls.start({
@@ -194,7 +205,7 @@ function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () 
 				x: target.x,
 				y: target.y,
 				opacity: 1,
-				transition: { duration: 1.05, ease: [0.22, 1, 0.36, 1] }
+				transition: { duration: 0.1, ease: 'linear' }
 			});
 			if (!active) return;
 
