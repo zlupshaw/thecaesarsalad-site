@@ -1,42 +1,97 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.siteMenuWrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 50;
+	padding: 12px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.siteMenu {
+	max-width: 980px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 10px 14px;
+	border: 1px solid rgba(0, 0, 0, 0.14);
+	border-radius: 12px;
+	backdrop-filter: blur(6px);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.siteBrand {
+	font-family: 'Cormorant Garamond', serif;
+	font-weight: 700;
+	font-size: 24px;
+	color: #1f1f1f;
+	text-decoration: none;
 }
 
-.card {
-  padding: 2em;
+.siteMenuToggle {
+	margin-left: auto;
+	display: none;
+	border: 0;
+	background: transparent;
+	padding: 6px;
 }
 
-.read-the-docs {
-  color: #888;
+.siteMenuToggle span {
+	display: block;
+	width: 22px;
+	height: 2px;
+	background: #2e2e2e;
+	border-radius: 2px;
+}
+
+.siteMenuToggle span + span {
+	margin-top: 4px;
+}
+
+.siteMenuLinks {
+	margin-left: auto;
+	display: flex;
+	gap: 16px;
+	align-items: center;
+}
+
+.siteMenuLink {
+	font-family: 'Cormorant Garamond', serif;
+	color: #2e2e2e;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+.siteMenuLink.active {
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+
+.siteContent {
+	padding-top: 50px;
+	background: radial-gradient(ellipse at center, #ffffff 0%, var(--paper) 55%, #ece6dc 100%);
+}
+
+@media (max-width: 760px) {
+	.siteMenu {
+		padding: 10px 12px;
+	}
+
+	.siteMenuToggle {
+		display: inline-block;
+	}
+
+	.siteMenuLinks {
+		display: none;
+		width: 100%;
+		margin-left: 0;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+		padding-top: 8px;
+	}
+
+	.siteMenuLinks.open {
+		display: flex;
+	}
 }

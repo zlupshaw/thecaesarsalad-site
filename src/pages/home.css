@@ -10,23 +10,20 @@ body {
 	padding: 0;
 	width: 100%;
 	min-height: 100%;
-	align-items: center; /* vertical center */
-	justify-content: center; /* horizontal center */
 }
 .page {
 	min-height: 100vh;
 	color: var(--ink);
-	background: radial-gradient(ellipse at center, #ffffff 0%, var(--paper) 55%, #ece6dc 100%);
-
-	display: flex;
-	align-items: center; /* vertical center */
-	justify-content: center; /* horizontal center */
+	display: block;
+	position: relative;
+	overflow-x: hidden;
 }
+
 .shell {
 	width: 100%;
 	max-width: 980px;
 	padding: 18px 16px 28px;
-	margin: auto 0;
+	margin: 0 auto;
 }
 
 /* Optional: subtle “print” feel */
@@ -43,6 +40,30 @@ body {
 .hero {
 	text-align: center;
 	padding: 18px 0 10px;
+}
+
+.heroIntro {
+	transform-origin: 50% 0%;
+}
+
+.heroOverlay {
+	position: fixed;
+	inset: 0;
+	z-index: 30;
+	display: grid;
+	place-items: center;
+	pointer-events: none;
+	background: transparent;
+}
+
+.heroOverlayTitle {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-weight: 600;
+	font-size: clamp(42px, 7vw, 64px);
+	color: rgba(0, 0, 0, 0.76);
+	letter-spacing: 0.2px;
+	line-height: 1;
 }
 
 .title {

@@ -1,4 +1,7 @@
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { motion, useAnimationControls } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import Hero from '../components/Hero';
 import map from '../assets/map.jpeg';
 import './home.css';
 
@@ -37,47 +40,185 @@ const HOTSPOTS: Hotspot[] = [
 		height: '70px'
 	}
 ];
+
+const HERO_LANDING_Y_OFFSET = -3;
+
 export default function Home() {
 	const navigate = useNavigate();
+	const heroRef = useRef<HTMLElement>(null);
+	const [showIndexContent, setShowIndexContent] = useState(false);
+	const [showHeroOverlay, setShowHeroOverlay] = useState(true);
+	const [overlayTarget, setOverlayTarget] = useState({ x: 0, y: 0 });
+
+	const updateTarget = useCallback(() => {
+		if (!heroRef.current) return;
+		const rect = heroRef.current.getBoundingClientRect();
+		setOverlayTarget({
+			x: rect.left + rect.width / 2 - window.innerWidth / 2,
+			y: rect.top + rect.height / 2 - window.innerHeight / 2 + HERO_LANDING_Y_OFFSET
+		});
+	}, []);
+
+	useLayoutEffect(() => {
+		updateTarget();
+		window.addEventListener('resize', updateTarget);
+		return () => {
+			window.removeEventListener('resize', updateTarget);
+		};
+	}, [showIndexContent, updateTarget]);
+
+	useEffect(() => {
+		if (!showHeroOverlay) return;
+
+		const previousBodyOverflow = document.body.style.overflow;
+		const previousHtmlOverflow = document.documentElement.style.overflow;
+		window.scrollTo(0, 0);
+		document.body.style.overflow = 'hidden';
+		document.documentElement.style.overflow = 'hidden';
+
+		return () => {
+			document.body.style.overflow = previousBodyOverflow;
+			document.documentElement.style.overflow = previousHtmlOverflow;
+		};
+	}, [showHeroOverlay]);
+
+	const handleOverlayMoveStart = useCallback(() => {
+		setShowIndexContent(true);
+		requestAnimationFrame(updateTarget);
+	}, [updateTarget]);
+
+	const handleOverlayComplete = useCallback(() => {
+		setShowHeroOverlay(false);
+	}, []);
 
 	return (
 		<div className="page">
+			{showHeroOverlay ? <HeroOverlay target={overlayTarget} onMoveStart={handleOverlayMoveStart} onComplete={handleOverlayComplete} /> : null}
+
 			<div className="shell">
-				<header className="hero">
-					<h1 className="title">Zach + Sara</h1>
-					<div className="date">10.4.2026</div>
-					<div className="place">Bend, OR</div>
-				</header>
+				<Hero
+					className="heroIntro"
+					heroRef={heroRef}
+					heroMotionProps={{
+						initial: { opacity: 0 },
+						animate: { opacity: showHeroOverlay ? 0 : 1 },
+						transition: { duration: 0.08, ease: 'linear' }
+					}}
+					titleMotionProps={{
+						initial: false
+					}}
+				/>
 
-				<div className="mapWrap" aria-label="Wedding map">
-					<img className="mapImage" src={map} alt="Wedding map" />
+				<motion.div
+					initial={false}
+					animate={{ opacity: showIndexContent ? 1 : 0, y: showIndexContent ? 0 : 20 }}
+					transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+					style={{ pointerEvents: showIndexContent ? 'auto' : 'none' }}>
+					<div className="mapWrap" aria-label="Wedding map">
+						<img className="mapImage" src={map} alt="Wedding map" />
 
-					{HOTSPOTS.map((h) => (
-						<button
-							key={h.id}
-							className="hotspot"
-							style={{
-								left: h.left,
-								top: h.top,
-								width: h.width,
-								height: h.height
-							}}
-							onClick={() => navigate(h.to)}
-							aria-label={h.id}
-							type="button"
-						/>
-					))}
-				</div>
+						{HOTSPOTS.map((h) => (
+							<button
+								key={h.id}
+								className="hotspot"
+								style={{
+									left: h.left,
+									top: h.top,
+									width: h.width,
+									height: h.height
+								}}
+								onClick={() => navigate(h.to)}
+								aria-label={h.id}
+								type="button"
+							/>
+						))}
+					</div>
 
-				<section className="legend">
-					<div className="legendHeader">Map Legend</div>
-					<div className="legendRule" />
+					<section className="legend">
+						<div className="legendHeader">Map Legend</div>
+						<div className="legendRule" />
 
-					<LegendRow title="Ceremony" place="Skyliner Lodge" detail="16114 Skyliners Rd" onClick={() => navigate('/ceremony')} />
-					<LegendRow title="Reception" place="Bend Cider" detail="64649 McGrath Rd" onClick={() => navigate('/reception')} />
-					<LegendRow title="Hotel Block" place="Campfire Hotel" detail="721 NE 3rd St" onClick={() => navigate('/hotel')} />
-				</section>
+						<LegendRow title="Ceremony" place="Skyliner Lodge" detail="16114 Skyliners Rd" onClick={() => navigate('/ceremony')} />
+						<LegendRow title="Reception" place="Bend Cider" detail="64649 McGrath Rd" onClick={() => navigate('/reception')} />
+						<LegendRow title="Hotel Block" place="Campfire Hotel" detail="721 NE 3rd St" onClick={() => navigate('/hotel')} />
+					</section>
+				</motion.div>
 			</div>
+		</div>
+	);
+}
+
+function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () => void; onComplete: () => void }) {
+	const controls = useAnimationControls();
+	const titleControls = useAnimationControls();
+	const dateControls = useAnimationControls();
+	const placeControls = useAnimationControls();
+	const { target, onMoveStart, onComplete } = props;
+
+	useEffect(() => {
+		let active = true;
+		const sleep = (ms: number) =>
+			new Promise<void>((resolve) => {
+				window.setTimeout(resolve, ms);
+			});
+
+		const runSequence = async () => {
+			await controls.start({
+				scale: 1.9,
+				x: 0,
+				y: 0,
+				opacity: 1,
+				transition: { duration: 0.01, ease: 'linear' }
+			});
+			if (!active) return;
+
+			await titleControls.start({ opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut' } });
+			if (!active) return;
+			await sleep(220);
+			if (!active) return;
+
+			await dateControls.start({ opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut' } });
+			if (!active) return;
+			await sleep(190);
+			if (!active) return;
+
+			await placeControls.start({ opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut' } });
+			if (!active) return;
+			await sleep(940);
+			if (!active) return;
+
+			onMoveStart();
+
+			await controls.start({
+				scale: 1,
+				x: target.x,
+				y: target.y,
+				opacity: 1,
+				transition: { duration: 1.05, ease: [0.22, 1, 0.36, 1] }
+			});
+			if (!active) return;
+
+			onComplete();
+		};
+
+		runSequence();
+		return () => {
+			active = false;
+		};
+	}, [controls, dateControls, onComplete, onMoveStart, placeControls, target.x, target.y, titleControls]);
+
+	return (
+		<div className="heroOverlay">
+			<Hero
+				className="heroOverlayHero"
+				heroMotionProps={{
+					initial: { scale: 1.9, x: 0, y: 0, opacity: 1 },
+					animate: controls
+				}}
+				titleMotionProps={{ initial: { opacity: 0, y: 10 }, animate: titleControls }}
+				dateMotionProps={{ initial: { opacity: 0, y: 10 }, animate: dateControls }}
+				placeMotionProps={{ initial: { opacity: 0, y: 10 }, animate: placeControls }}
+			/>
 		</div>
 	);
 }
