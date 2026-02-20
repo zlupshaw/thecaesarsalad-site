@@ -47,10 +47,16 @@ export default function Hotel() {
 							Book Campfire Hotel with our room block
 						</a>
 					</p>
+					<p>
+						The link books Friday October 2nd through Monday October 5th. If you’d like to stay longer, first book those nights using the link, then
+						email&nbsp;
+						<a href="mailto:Wendy@campfirehotel.com">Wendy@campfirehotel.com</a> with the extra dates you want to add. She can extend your stay at
+						the same discounted rate.
+					</p>
 
 					<p>
-						The link books Friday October 2nd through Monday October 5th. If you want to stay longer, just make a second reservation for the extra
-						nights and call the hotel. They can merge the reservations so you keep the same room.
+						Please don’t make a separate reservation for the additional nights (especially through a third-party site), as it becomes difficult to
+						attach it to the wedding rate and keep you in the same room.
 					</p>
 				</section>
 			</div>
