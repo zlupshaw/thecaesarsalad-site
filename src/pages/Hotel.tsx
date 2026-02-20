@@ -24,10 +24,10 @@ export default function Hotel() {
 
 					<div className="venuePhotos">
 						<div className="sitePhoto">
-							<img src="/src/assets/campfire1.webp" alt="Campfire Hotel Photo 1" />
+							<img src="/assets/campfire1.webp" alt="Campfire Hotel Photo 1" />
 						</div>
 						<div className="sitePhoto">
-							<img src="/src/assets/campfire2.webp" alt="Campfire Hotel Photo 2" />
+							<img src="/assets/campfire2.webp" alt="Campfire Hotel Photo 2" />
 						</div>
 					</div>
 				</div>

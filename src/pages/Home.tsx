@@ -2,7 +2,6 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import { motion, useAnimationControls } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
-import map from '../assets/map.jpeg';
 import './home.css';
 
 type Hotspot = {
@@ -125,7 +124,7 @@ export default function Home() {
 					transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
 					style={{ pointerEvents: showIndexContent ? 'auto' : 'none' }}>
 					<div className="mapWrap" aria-label="Wedding map">
-						<img className="mapImage" src={map} alt="Wedding map" />
+						<img className="mapImage" src="/assets/map.jpeg" alt="Wedding map" />
 
 						{HOTSPOTS.map((h) => (
 							<button
@@ -149,21 +148,21 @@ export default function Home() {
 						<div className="legendRule" />
 
 						<LegendRow
-							iconPath="/src/assets/ceremonyicon.jpeg"
+							iconPath="/assets/ceremonyicon.jpeg"
 							title="Ceremony"
 							place="Skyliner Lodge"
 							detail="16114 Skyliners Rd"
 							onClick={() => navigate('/ceremony')}
 						/>
 						<LegendRow
-							iconPath="/src/assets/receptionicon.jpeg"
+							iconPath="/assets/receptionicon.jpeg"
 							title="Reception"
 							place="Bend Cider"
 							detail="64649 McGrath Rd"
 							onClick={() => navigate('/reception')}
 						/>
 						<LegendRow
-							iconPath="/src/assets/sleepicon.jpeg"
+							iconPath="/assets/sleepicon.jpeg"
 							title="Hotel Block"
 							place="Campfire Hotel"
 							detail="721 NE 3rd St"

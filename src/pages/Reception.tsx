@@ -24,10 +24,10 @@ export default function Reception() {
 
 					<div className="venuePhotos">
 						<div className="sitePhoto">
-							<img src="/src/assets/cider1.webp" alt="Bend Cider Co. Photo 1" />
+							<img src="/assets/cider1.webp" alt="Bend Cider Co. Photo 1" />
 						</div>
 						<div className="sitePhoto">
-							<img src="/src/assets/cider2.webp" alt="Bend Cider Co. Photo 2" />
+							<img src="/assets/cider2.webp" alt="Bend Cider Co. Photo 2" />
 						</div>
 					</div>
 				</div>
