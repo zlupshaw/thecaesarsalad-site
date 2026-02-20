@@ -49,7 +49,7 @@ export default function Hotel() {
 					</p>
 
 					<p>
-						The link books Friday October 2nd through Sunday October 4th. If you want to stay longer, just make a second reservation for the extra
+						The link books Friday October 2nd through Monday October 5th. If you want to stay longer, just make a second reservation for the extra
 						nights and call the hotel. They can merge the reservations so you keep the same room.
 					</p>
 				</section>
