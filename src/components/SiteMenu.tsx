@@ -17,7 +17,7 @@ export default function SiteMenu() {
 	return (
 		<header className="siteMenuWrap">
 			<nav className="siteMenu" aria-label="Main">
-				<NavLink to="/" className="siteBrand" onClick={handleClose}>
+				<NavLink to="/?skipIntro=1" className="siteBrand" onClick={handleClose}>
 					Z + S
 				</NavLink>
 

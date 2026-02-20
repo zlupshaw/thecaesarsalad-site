@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import map from '../assets/map.jpeg';
 import './home.css';
@@ -45,10 +45,19 @@ const HERO_LANDING_Y_OFFSET = -3;
 
 export default function Home() {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const skipIntro = new URLSearchParams(location.search).get('skipIntro') === '1';
 	const heroRef = useRef<HTMLElement>(null);
-	const [showIndexContent, setShowIndexContent] = useState(false);
-	const [showHeroOverlay, setShowHeroOverlay] = useState(true);
+	const [showIndexContent, setShowIndexContent] = useState(skipIntro);
+	const [showHeroOverlay, setShowHeroOverlay] = useState(!skipIntro);
 	const [overlayTarget, setOverlayTarget] = useState({ x: 0, y: 0 });
+
+	useEffect(() => {
+		if (skipIntro) {
+			setShowIndexContent(true);
+			setShowHeroOverlay(false);
+		}
+	}, [skipIntro]);
 
 	const updateTarget = useCallback(() => {
 		if (!heroRef.current) return;
@@ -65,7 +74,7 @@ export default function Home() {
 		return () => {
 			window.removeEventListener('resize', updateTarget);
 		};
-	}, [showIndexContent, updateTarget]);
+	}, [updateTarget]);
 
 	useEffect(() => {
 		if (!showHeroOverlay) return;
@@ -86,8 +95,7 @@ export default function Home() {
 
 	const handleOverlayMoveStart = useCallback(() => {
 		setShowIndexContent(true);
-		requestAnimationFrame(updateTarget);
-	}, [updateTarget]);
+	}, []);
 
 	const handleOverlayComplete = useCallback(() => {
 		setShowHeroOverlay(false);
@@ -140,9 +148,27 @@ export default function Home() {
 						<div className="legendHeader">Map Legend</div>
 						<div className="legendRule" />
 
-						<LegendRow title="Ceremony" place="Skyliner Lodge" detail="16114 Skyliners Rd" onClick={() => navigate('/ceremony')} />
-						<LegendRow title="Reception" place="Bend Cider" detail="64649 McGrath Rd" onClick={() => navigate('/reception')} />
-						<LegendRow title="Hotel Block" place="Campfire Hotel" detail="721 NE 3rd St" onClick={() => navigate('/hotel')} />
+						<LegendRow
+							iconPath="/src/assets/ceremonyicon.jpeg"
+							title="Ceremony"
+							place="Skyliner Lodge"
+							detail="16114 Skyliners Rd"
+							onClick={() => navigate('/ceremony')}
+						/>
+						<LegendRow
+							iconPath="/src/assets/receptionicon.jpeg"
+							title="Reception"
+							place="Bend Cider"
+							detail="64649 McGrath Rd"
+							onClick={() => navigate('/reception')}
+						/>
+						<LegendRow
+							iconPath="/src/assets/sleepicon.jpeg"
+							title="Hotel Block"
+							place="Campfire Hotel"
+							detail="721 NE 3rd St"
+							onClick={() => navigate('/hotel')}
+						/>
 					</section>
 				</motion.div>
 			</div>
@@ -156,6 +182,11 @@ function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () 
 	const dateControls = useAnimationControls();
 	const placeControls = useAnimationControls();
 	const { target, onMoveStart, onComplete } = props;
+	const targetRef = useRef(target);
+
+	useEffect(() => {
+		targetRef.current = target;
+	}, [target.x, target.y]);
 
 	useEffect(() => {
 		let active = true;
@@ -189,10 +220,12 @@ function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () 
 			await sleep(940);
 			if (!active) return;
 
+			const landingTarget = targetRef.current;
+
 			await controls.start({
 				scale: 1,
-				x: target.x * 0.9,
-				y: target.y * 0.9,
+				x: landingTarget.x * 0.9,
+				y: landingTarget.y * 0.9,
 				opacity: 1,
 				transition: { duration: 0.95, ease: [0.22, 1, 0.36, 1] }
 			});
@@ -202,8 +235,8 @@ function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () 
 
 			await controls.start({
 				scale: 1,
-				x: target.x,
-				y: target.y,
+				x: landingTarget.x,
+				y: landingTarget.y,
 				opacity: 1,
 				transition: { duration: 0.1, ease: 'linear' }
 			});
@@ -216,7 +249,7 @@ function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () 
 		return () => {
 			active = false;
 		};
-	}, [controls, dateControls, onComplete, onMoveStart, placeControls, target.x, target.y, titleControls]);
+	}, [controls, dateControls, onComplete, onMoveStart, placeControls, titleControls]);
 
 	return (
 		<div className="heroOverlay">
@@ -234,12 +267,15 @@ function HeroOverlay(props: { target: { x: number; y: number }; onMoveStart: () 
 	);
 }
 
-function LegendRow(props: { title: string; place: string; detail: string; onClick: () => void }) {
+function LegendRow(props: { iconPath: string; title: string; place: string; detail: string; onClick: () => void }) {
 	return (
 		<button className="legendRow" onClick={props.onClick} type="button">
-			<div className="legendTitle">{props.title}</div>
-			<div className="legendPlace">{props.place}</div>
-			<div className="legendDetail">{props.detail}</div>
+			<img src={props.iconPath} alt={props.title} className="legendIcon" />
+			<div>
+				<div className="legendTitle">{props.title}</div>
+				<div className="legendPlace">{props.place}</div>
+				<div className="legendDetail">{props.detail}</div>
+			</div>
 		</button>
 	);
 }

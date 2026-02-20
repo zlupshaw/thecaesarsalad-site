@@ -1,0 +1,221 @@
+.rsvpPage {
+	min-height: 100%;
+	padding: 24px 16px 32px;
+}
+
+.rsvpShell {
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+.rsvpHeader h1 {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: clamp(38px, 6vw, 56px);
+	line-height: 1;
+}
+
+.rsvpHeader p {
+	margin: 8px 0 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 22px;
+}
+
+.rsvpForm {
+	margin-top: 18px;
+	display: grid;
+	gap: 12px;
+	padding: 16px;
+	background: rgba(255, 255, 255, 0.66);
+	border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.rsvpField {
+	display: grid;
+	gap: 6px;
+}
+
+.rsvpSection {
+	display: grid;
+	gap: 8px;
+	padding: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.16);
+	background: rgba(255, 255, 255, 0.44);
+}
+
+.rsvpSectionTitle {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 30px;
+	line-height: 1;
+}
+
+.rsvpSectionCopy {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 20px;
+	line-height: 1.2;
+	color: rgba(0, 0, 0, 0.74);
+}
+
+.rsvpField span,
+.rsvpCheck span {
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 22px;
+	line-height: 1.1;
+}
+
+.rsvpField input,
+.rsvpField textarea {
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 20px;
+	padding: 10px 12px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: rgba(255, 255, 255, 0.86);
+}
+
+.rsvpField textarea {
+	resize: vertical;
+}
+
+.rsvpCheck {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.rsvpAttendanceRow {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.rsvpCheckCard {
+	align-items: flex-start;
+	padding: 10px 12px;
+	border: 1px solid rgba(0, 0, 0, 0.16);
+	background: rgba(255, 255, 255, 0.55);
+}
+
+.rsvpCheckCard > span {
+	display: grid;
+	gap: 2px;
+}
+
+.rsvpCheckMeta {
+	display: block;
+	font-size: 18px;
+	line-height: 1.2;
+	color: rgba(0, 0, 0, 0.68);
+}
+
+.rsvpCheck input {
+	width: 18px;
+	height: 18px;
+	margin-top: 3px;
+}
+
+.rsvpNote {
+	margin: -4px 0 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 19px;
+	line-height: 1.2;
+	color: rgba(0, 0, 0, 0.72);
+}
+
+.rsvpMessage {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 20px;
+}
+
+.rsvpError {
+	color: #8d1010;
+}
+
+.rsvpSuccess {
+	color: #0f5f37;
+}
+
+.rsvpSubmit {
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 22px;
+	padding: 10px 14px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	background: rgba(255, 255, 255, 0.92);
+	cursor: pointer;
+}
+
+.rsvpSubmit:disabled {
+	opacity: 0.65;
+	cursor: default;
+}
+
+.rsvpModalBackdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+	display: grid;
+	place-items: center;
+	padding: 16px;
+	z-index: 80;
+}
+
+.rsvpModal {
+	width: min(100%, 460px);
+	background: #fff;
+	padding: 18px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.rsvpModal h2 {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 34px;
+}
+
+.rsvpModal p {
+	margin: 10px 0 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 22px;
+	line-height: 1.3;
+}
+
+.rsvpModal button {
+	margin-top: 14px;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 20px;
+	padding: 8px 12px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	background: #fff;
+	cursor: pointer;
+}
+
+@media (max-width: 700px) {
+	.rsvpField span,
+	.rsvpCheck span,
+	.rsvpHeader p,
+	.rsvpField input,
+	.rsvpField textarea,
+	.rsvpSubmit,
+	.rsvpModal p {
+		font-size: 19px;
+	}
+
+	.rsvpSectionTitle {
+		font-size: 26px;
+	}
+
+	.rsvpSectionCopy {
+		font-size: 18px;
+	}
+
+	.rsvpAttendanceRow {
+		grid-template-columns: 1fr;
+	}
+
+	.rsvpCheckMeta,
+	.rsvpNote {
+		font-size: 17px;
+	}
+}
