@@ -21,6 +21,12 @@ export default function Ceremony() {
 							referrerPolicy="no-referrer-when-downgrade"
 						/>
 					</div>
+
+					<div className="venuePhotos">
+						<div className="sitePhoto">
+							<img src="/assets/ceremony1.webp" alt="Skyliner Lodge Photo 1" />
+						</div>
+					</div>
 				</div>
 
 				<section className="venueCopy">

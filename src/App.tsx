@@ -6,6 +6,8 @@ import Reception from './pages/Reception';
 import Hotel from './pages/Hotel';
 import Rsvp from './pages/Rsvp';
 import Information from './pages/Information';
+import HappyHour from './pages/HappyHour';
+import Timeline from './pages/Timeline';
 import './App.css';
 
 export default function App() {
@@ -18,6 +20,8 @@ export default function App() {
 				<Route path="/hotel" element={<Hotel />} />
 				<Route path="/rsvp" element={<Rsvp />} />
 				<Route path="/information" element={<Information />} />
+				<Route path="/happy-hour" element={<HappyHour />} />
+				<Route path="/timeline" element={<Timeline />} />
 			</Route>
 		</Routes>
 	);

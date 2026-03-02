@@ -1,0 +1,63 @@
+.timelinePage {
+	min-height: 100%;
+	padding: 24px 16px 32px;
+}
+
+.timelineShell {
+	max-width: 860px;
+	margin: 0 auto;
+}
+
+.timelineHeader h1 {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: clamp(36px, 5vw, 54px);
+	line-height: 1.05;
+}
+
+.timelineHeader p {
+	margin: 8px 0 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 24px;
+}
+
+.timelineList {
+	list-style: none;
+	margin: 20px 0 0;
+	padding: 0;
+	display: grid;
+	gap: 14px;
+}
+
+.timelineItem {
+	padding: 14px;
+	border: 1px solid rgba(0, 0, 0, 0.17);
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.timelineDate {
+	margin: 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.timelineItem h2 {
+	margin: 6px 0 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 34px;
+	line-height: 1.05;
+}
+
+.timelineTime {
+	margin: 6px 0 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 24px;
+}
+
+.timelineDescription {
+	margin: 6px 0 0;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 22px;
+	line-height: 1.35;
+}

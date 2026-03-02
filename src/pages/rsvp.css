@@ -109,6 +109,10 @@
 	color: rgba(0, 0, 0, 0.68);
 }
 
+.rsvpCheckTime {
+	display: block;
+}
+
 .rsvpCheck input {
 	width: 18px;
 	height: 18px;

@@ -48,8 +48,13 @@ export default function Rsvp() {
 		const trimmedInfo = formState.myInfo.trim();
 		const trimmedGuestName = formState.myGuestName.trim();
 
-		if (!trimmedFirst || !trimmedLast || !trimmedEmail || !trimmedPhone || !trimmedInfo) {
+		if (!trimmedFirst || !trimmedLast || !trimmedEmail || !trimmedPhone) {
 			setFormError('Please fill out all required fields.');
+			return;
+		}
+
+		if (formState.isDietary && !trimmedInfo) {
+			setFormError('Please include your dietary restrictions in Additional Info.');
 			return;
 		}
 
@@ -158,8 +163,11 @@ export default function Rsvp() {
 									onChange={(event) => setFormState((prev) => ({ ...prev, isGoingToCeremony: event.target.checked }))}
 								/>
 								<span>
-									Ceremony
-									<span className="rsvpCheckMeta">Sunday October 4, 2026</span>
+									Ceremony + Reception
+									<span className="rsvpCheckMeta">
+										Sunday October 4, 2026
+										<span className="rsvpCheckTime">Time TBD</span>
+									</span>
 								</span>
 							</label>
 
@@ -171,7 +179,10 @@ export default function Rsvp() {
 								/>
 								<span>
 									Happy Hour
-									<span className="rsvpCheckMeta">Saturday October 3, 2026</span>
+									<span className="rsvpCheckMeta">
+										Saturday October 3, 2026
+										<span className="rsvpCheckTime">4-7 pm</span>
+									</span>
 								</span>
 							</label>
 						</div>
@@ -215,12 +226,12 @@ export default function Rsvp() {
 					<p className="rsvpNote">If checked, please add your dietary restrictions in the Additional Info box below.</p>
 
 					<label className="rsvpField">
-						<span>Additional Info *</span>
+						<span>Additional Info {formState.isDietary ? '*' : '(optional)'}</span>
 						<textarea
 							rows={4}
 							value={formState.myInfo}
 							onChange={(event) => setFormState((prev) => ({ ...prev, myInfo: event.target.value }))}
-							required
+							required={formState.isDietary}
 						/>
 					</label>
 
