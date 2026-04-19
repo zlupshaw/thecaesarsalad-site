@@ -7,6 +7,8 @@ const NAV_ITEMS = [
 	{ to: '/ceremony', label: 'Ceremony' },
 	{ to: '/reception', label: 'Reception' },
 	{ to: '/hotel', label: 'Hotel Block' },
+	{ to: '/travel', label: 'Travel' },
+	{ to: '/bend', label: 'Recommendations' },
 	{ to: '/rsvp', label: 'RSVP' },
 ];
 

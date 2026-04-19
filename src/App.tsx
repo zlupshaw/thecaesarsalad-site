@@ -8,6 +8,8 @@ import Rsvp from './pages/Rsvp';
 import Information from './pages/Information';
 import HappyHour from './pages/HappyHour';
 import Timeline from './pages/Timeline';
+import Travel from './pages/Travel';
+import Bend from './pages/Bend';
 import './App.css';
 
 export default function App() {
@@ -22,6 +24,8 @@ export default function App() {
 				<Route path="/information" element={<Information />} />
 				<Route path="/happy-hour" element={<HappyHour />} />
 				<Route path="/timeline" element={<Timeline />} />
+				<Route path="/travel" element={<Travel />} />
+				<Route path="/bend" element={<Bend />} />
 			</Route>
 		</Routes>
 	);
